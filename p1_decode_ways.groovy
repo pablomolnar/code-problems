@@ -37,6 +37,10 @@ int recursion(s, int solutions) {
     return solutions
 }
 
+assert decode("") == 0
+assert decode("0") == 0
+assert decode("1") == 1
+assert decode("27") == 1
 assert decode("12") == 2
 assert decode("1212") == 5
 assert decode("121212") == 13
