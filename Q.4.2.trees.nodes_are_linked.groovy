@@ -43,3 +43,47 @@ n7.nodesTo << n8
 
 assert are_linked(n1, n4)
 assert !are_linked(n1, n6)
+
+
+
+/*
+2nd approach with recursion
+
+
+A->B->C-->D-->G
+|      ^  |
+F       \_|
+          E
+*/
+       
+
+def g = new Node()
+def f = new Node()
+def e = new Node()
+def d = new Node(nodesTo:[g,e])
+def c = new Node(nodesTo:[d])
+def b = new Node(nodesTo:[c])
+def a = new Node(nodesTo:[b,f])
+e.nodesTo = [c]
+
+
+assert existsRouteBetween(a, e)
+assert !existsRouteBetween(e, a)
+assert !existsRouteBetween(e, f)
+
+
+boolean existsRouteBetween(a, b) {
+    if(a == b) return true
+    a.visited = true
+
+    if(a.nodesTo) {
+        for(def node: a.nodesTo) {
+            if(!node.visited && existsRouteBetween(node, b)) {
+                return true
+            }
+        }
+    } 
+
+    return false
+}
+
