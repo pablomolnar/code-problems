@@ -33,3 +33,63 @@ Node loop(list, from, to) {
 
 	return node
 }
+
+// 4.4 Given a binary tree, design an algorithm which creates a linked list of all the nodes at
+// each depth (e.g., if you have a tree with depth D,you'll have D linked lists).
+
+println linkedlistByDepth(root)
+Collection linkedlistByDepth(node) {
+
+    def map = [:]
+    loop2(node, 0, map)
+    return map.values()
+}
+
+
+void loop2(node, depth, map) {
+    if(!map[depth]) {
+        map[depth] = [] as LinkedList
+    }
+
+    map[depth].add(node)
+
+    if(node.left) loop(node.left, depth + 1, map)
+    if(node.right) loop(node.right, depth + 1, map)
+}
+
+// 4.5 Implement a function to check if a binary tree is a binary search tree.
+
+assert isBinarySearchTree(root)
+
+boolean isBinarySearchTree(Node node) {
+        return checkLeft(node.left, node) && checkRight(node.right, node.value)
+}
+
+boolean checkLeft(node, parent) {
+    if(!node) return true
+    if(node.value <= parent.value) {
+        return checkLeft(node.left, node)
+    } 
+
+    return false
+}
+
+boolean checkRight(node, parent) {
+    if(!node) return true
+    if(node.value > parent.value) {
+        return checkRight(node.right, node)
+    }
+
+    return false
+}
+
+
+assert isBinarySearchTree2(root)
+boolean isBinarySearchTree2(Node node) {
+        if(!node) return true
+        return isBinarySearchTree2(node.left) && isBinarySearchTree2(node.right)
+        if(node.left && node.left.value > node.value) return false
+        if(node.right && node.right.value < node.value) return false
+
+        return false
+}
