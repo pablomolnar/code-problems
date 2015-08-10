@@ -88,3 +88,24 @@ List loop(String prefix, String letters, List permutations) {
 
 }
 
+
+// All letters combinations of size with duplicates
+
+assert allLettersCombinationsOfSize('abc', 1).sort() == ['a','b','c']
+assert allLettersCombinationsOfSize('abc', 2).sort() == ['aa','bb','cc','ab','ac','ba','bc','ca','cb' ].sort()
+
+Collection allLettersCombinationsOfSize(String letters, int size) {
+    def permutations = [] as Set
+    loop('', letters * size, size, permutations)
+    return permutations
+}
+
+void loop(String prefix, String letters, int size, Collection permutations) {
+    if(prefix.size() >= size) {
+        permutations.add(prefix)
+    } else {
+        for(int i = 0 ; i < letters.size() ; i++) {
+            loop(prefix + letters[i], letters.substring(0,i) + letters.substring(i+1), size, permutations)
+        }
+    }
+}
