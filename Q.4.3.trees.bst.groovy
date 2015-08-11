@@ -93,3 +93,112 @@ boolean isBinarySearchTree2(Node node) {
 
         return false
 }
+
+// 4.6 Implement a function to given a node of a binary search tree get the next node (ascending value)
+def one = root.left.left
+def three = root.left.right
+def four = root
+def five = root.right.left
+
+assert nextValue(one).value == 2
+assert nextValue(three).value == 4
+assert nextValue(four).value == 5
+assert nextValue(five).value == 6
+
+
+Node nextValue(Node node) {
+
+    if(!node) return null
+
+    if(node.right) {
+        return getMostLeft(node.right)
+    } 
+
+    if(node.parent) {
+        return searchGreaterParent(node)
+    }
+
+    return null
+}
+
+
+Node getMostLeft(Node node) {
+    while(node.left) {
+        node = node.left
+    }
+
+    return node
+}
+
+Node searchGreaterParent(Node node) {
+    while(node.parent) {
+        if(node.parent.left == node) return node.parent
+        node = node.parent
+    }
+
+    return node
+}
+
+// 4.7 Implement function to find the first common ancestor of two nodes binarytree.
+
+
+// Approach #1: traverse parent and marked visited in a map O(depth * 2) space/time
+assert commonAncestor(one, three).value == 2
+assert commonAncestor(three, one).value == 2
+
+assert commonAncestor(one, five).value == 4
+assert commonAncestor(five, one).value == 4
+
+Node commonAncestor(Node a, Node b) {
+
+    def map = [:]
+
+    while(a.parent || b.parent) {
+        if(a.parent == b.parent) return a.parent;
+
+        if(a.parent) {
+            if(map.containsKey(a.parent)) {
+                return a.parent
+            }
+
+            map[a.parent] == null
+            a = a.parent
+        }
+
+        
+
+        if(b.parent) {
+            if(map.containsKey(b.parent)) {
+                return b.parent
+            }
+
+            map[b.parent] == null
+            b = b.parent
+        }
+    }
+
+    return null
+}
+
+// Approach #2: Traverse for each parent the others parent. O(!depth) time O(1) space
+
+assert commonAncestor2(one, three).value == 2
+assert commonAncestor2(three, one).value == 2
+
+assert commonAncestor2(one, five).value == 4
+assert commonAncestor2(five, one).value == 4
+
+
+Node commonAncestor2(Node a, Node b) {
+
+    while(a.parent) {
+        def temp = b
+
+        while(temp.parent) {
+            if(a.parent == temp.parent) return a.parent
+            temp = temp.parent
+        }
+
+        a = a.parent
+    }
+}
