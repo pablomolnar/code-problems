@@ -1,0 +1,6 @@
+TODO:
+
+- Write a function to reverse a string.
+- Write function to compute Nth fibonacci number
+- Print out the grade-school multiplication table up to 12x12
+- implement all data structure 
