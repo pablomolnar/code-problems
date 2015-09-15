@@ -4,23 +4,35 @@ assert queens(4) == 2
 
 int queens(nth) {
     def solutions = [nr: 0]
-
-    // Start the board placing the queen in different column
-    for (int y = 0; y < nth; y++) {
-        loop(1, [y], nth, solutions)
-    }
-
+    loop(0, [], nth, solutions)
     return solutions.nr
 }
 
+void loop(int x, board, nth, solutions) {
+
+    // All queen placed?
+    if (x == nth) {
+        printBoard(board)
+        solutions.nr++
+
+        return
+    }
+
+    for (int y = 0; y < nth; y++) {
+        // Clone board to have a fresh copy for each iteration
+        def clone = board//.clone()
+        if (isValid(x, y, board)) {
+            clone[x] = y
+            loop(x + 1, clone, nth, solutions)
+        }
+    }
+}
 
 boolean isValid(x, y, board) {
-
     // Check row / column
     if (board[x] >= 0 || board.contains(y)) {
         return false
     }
-
 
     // Check diagonals
     int j = 1
@@ -34,34 +46,14 @@ boolean isValid(x, y, board) {
     return true
 }
 
-void loop(int x, board, nth, solutions) {
-
-    // All queen placed?
-    if (x == nth) {
-        printBoard(board)
-        solutions.nr++
-        return
-    }
-
-    for (int y = 0; y < nth; y++) {
-        // Clone board to have a fresh copy for each iteration
-        def clone = board.clone()
-        if (isValid(x, y, board)) {
-            clone[x] = y
-            loop(x + 1, clone, nth, solutions)
-        }
-    }
-}
-
-void printBoard(b) {
-    println ""
+void printBoard(position) {
     def board = []
-    b.size().times {
-        board << ['x'] * b.size()
+    position.size().times {
+        board << ['x'] * position.size()
     }
 
-    for (int x = 0; x < b.size(); x++) {
-        board[x][b[x]] = 'Q'
+    for (int x = 0; x < position.size(); x++) {
+        board[x][position[x]] = 'Q'
     }
 
     board.each {
