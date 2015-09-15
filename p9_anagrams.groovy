@@ -15,7 +15,7 @@ boolean performantAnagrams(s1, s2) {
 
 	for(it in s2.toLowerCase()) {
 		if(map[it]) map[it]-- 
-		else return fale
+		else return false
 	}
 
 	if(map.values().any { it != 0}) return false
