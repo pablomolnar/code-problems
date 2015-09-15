@@ -4,3 +4,7 @@ TODO:
 - Write function to compute Nth fibonacci number
 - Print out the grade-school multiplication table up to 12x12
 - implement all data structure 
+- Merge 2 sorted linked lists.
+
+
+For exmple, string="abc(edf)hij{klmn}opq[rst]uvw" The delimitors are (), {}, []. They are in pair. So output array: ["abc", "edf", "hij", "klmn", "opq", "rst", "uvw"] That's the rule 1. The rule 2 is, if any two consecutive "(" means escaping, that is "((" is actually output char "(". It's not part of the delimitor. Similar to ")", "{", "}", "[", "]". abc(e))df) =&gt; ["abc", "e)df"], since the "))" outpus ")". Rule 3: if "{" is inside a delimitor pair (), then "{" isn't part of the delimitor. Output it as is. abc(e{df}}g) =&gt; ["abc", "e{df}}g"] So, parse the given string and assume the given string is always valid and parsable. I think state machine is a good direction. But I didn't finish it.  
